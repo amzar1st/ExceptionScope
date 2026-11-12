@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Verify whether a policy exception covers an action on GenLayer Studionet.">
+  <title>ExceptionScope</title>
+</head>
+<body>
+<header class="shell bar">
+  <a class="brand" href="./"><span aria-hidden="true">◈</span> ExceptionScope</a>
+  <nav aria-label="Project links"><a href="https://github.com/amzar1st/ExceptionScope">Source</a><a href="https://studio.genlayer.com/run-debug">GenLayer Studio ↗</a></nav>
+</header>
+<main class="shell">
+  <section class="hero">
+    <p class="network">● GENLAYER STUDIONET · 61999</p>
+    <h1>Does the exception<br>cover this action?</h1>
+    <p>Verify an action against the exact policy and exception issued on-chain. See which clauses and scope checks determined the outcome.</p>
+    <div id="deployment" class="deployment"></div>
+  </section>
+  <div class="layout">
+    <section class="panel">
+      <h2>Action details</h2>
+      <div id="examples" class="actions examples" aria-label="Demo cases"></div>
+      <form id="review">
+        <div class="pair">
+          <label>Policy ID<input name="policy" required pattern="[a-f0-9]{64}" placeholder="64-character record ID"></label>
+          <label>Exception ID<input name="exception" required pattern="[a-f0-9]{64}" placeholder="64-character record ID"></label>
+        </div>
+        <div class="pair">
+          <label>Actor<input name="actor" required maxlength="96" placeholder="research-team"></label>
+          <label>Resource<input name="resource" required maxlength="96" placeholder="dataset-17"></label>
+        </div>
+        <div class="pair">
+          <label>Operation<input name="operation" required maxlength="96" placeholder="Export"></label>
+          <label>Action time (UTC)<input name="timestamp" type="datetime-local" step="1" required></label>
+        </div>
+        <label>Purpose<textarea name="purpose" required maxlength="280" rows="2" placeholder="Describe the purpose of the action"></textarea></label>
+        <div class="actions"><button>Find decision</button><button type="button" id="prepare" class="secondary">Prepare Studio transaction</button></div>
+      </form>
+      <details id="studio-detail">
+        <summary>Studio transaction instructions</summary>
+        <p>In Studio’s Contracts view, choose Import Contract and enter the contract address above. Open Run and Debug. Use Full Consensus mode. In <code>verify_action</code>, enter the arguments below in order and send with your Studio account. Paste the returned hash into the receipt tracker.</p>
+        <pre id="args">Prepare an action to generate the arguments.</pre>
+        <button type="button" class="secondary" id="copy" disabled>Copy arguments</button>
+        <a href="https://studio.genlayer.com/run-debug">Open Studio ↗</a>
+        <p id="copy-state" aria-live="polite"></p>
+      </details>
+    </section>
+    <section class="panel verdict">
+      <h2>Decision record</h2>
+      <div id="result" aria-live="polite"><p class="muted">Enter an action or choose a demo case to retrieve its finalized record.</p></div>
+    </section>
+  </div>
+  <section class="panel tracker">
+    <h2>Transaction receipt</h2>
+    <form id="track">
+      <label>Studionet transaction hash<input name="hash" required pattern="0x[a-fA-F0-9]{64}" placeholder="0x…"></label>
+      <div class="actions"><button>Track receipt</button><button type="button" class="secondary" id="stop" disabled>Stop tracking</button></div>
+    </form>
+    <p id="receipt" aria-live="polite" class="muted">Track a Studio submission through finalization.</p>
+    <a id="transaction" hidden>View transaction ↗</a>
+    <button type="button" class="secondary" id="failure-example">Track rejected demo</button>
+  </section>
+</main>
+<footer class="shell footer">Coverage applies to the submitted action details and pinned records.</footer>
+<script type="module" src="/web/main.js"></script>
+</body>
+</html>
